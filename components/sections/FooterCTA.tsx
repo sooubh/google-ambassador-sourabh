@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { SectionReveal } from '../ui/SectionReveal';
 
 export const FooterCTA: React.FC = () => {
@@ -31,8 +32,10 @@ export const FooterCTA: React.FC = () => {
               </iframe>
            </div>
            
-           <div className="mt-12 flex gap-6 text-gray-600 text-sm justify-center">
+           <div className="mt-12 flex gap-6 text-gray-600 text-sm justify-center items-center">
               <span>© 2024 Google Student Program</span>
+              <span>•</span>
+              <Link to="/services" className="hover:text-google-blue transition-colors">AI Services</Link>
               <span>•</span>
               <span>Privacy Policy</span>
               <span>•</span>

@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
 import { ArrowDown, Sparkles, ExternalLink } from 'lucide-react';
+import { Link } from 'react-router-dom';
 
 export const Hero: React.FC = () => {
   const containerRef = useRef<HTMLElement>(null);
@@ -92,13 +93,14 @@ export const Hero: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-100/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
             </motion.a>
             
-            <motion.button
-              onClick={handleScrollDown}
-              whileHover={{ scale: 1.05 }}
-              className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 backdrop-blur-sm font-medium transition-colors cursor-pointer"
-            >
-              Explore Features
-            </motion.button>
+            <Link to="/services">
+                <motion.button
+                  whileHover={{ scale: 1.05 }}
+                  className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 backdrop-blur-sm font-medium transition-colors cursor-pointer text-white"
+                >
+                  Try AI Services
+                </motion.button>
+            </Link>
           </div>
         </motion.div>
       </div>

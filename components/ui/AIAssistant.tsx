@@ -108,14 +108,33 @@ export const AIAssistant: React.FC = () => {
       }));
 
       // Use generateContentStream for real-time feedback
-      const responseStream = await ai.models.generateContentStream({
-        model: 'gemini-1.5-pro', // Using version 1.5 Pro
-        contents: [...history, { role: 'user', parts: [{ text: userMsg }] }],
-        config: {
-          systemInstruction: systemInstruction,
-          tools: tools,
+      let responseStream;
+      try {
+        console.log("Attempting with gemini-1.5-pro...");
+        responseStream = await ai.models.generateContentStream({
+          model: 'gemini-1.5-pro',
+          contents: [...history, { role: 'user', parts: [{ text: userMsg }] }],
+          config: {
+            systemInstruction: systemInstruction,
+            tools: tools,
+          }
+        });
+      } catch (error) {
+        console.warn("Pro model failed, switching to fallback (Flash)...", error);
+        try {
+           responseStream = await ai.models.generateContentStream({
+            model: 'gemini-1.5-flash',
+            contents: [...history, { role: 'user', parts: [{ text: userMsg }] }],
+            config: {
+              systemInstruction: systemInstruction,
+              tools: tools,
+            }
+          });
+        } catch (flashError) {
+           console.error("All models failed", flashError);
+           throw flashError; // Re-throw to be caught by the outer catch block
         }
-      });
+      }
 
       let fullText = "";
       let functionCalls: any[] = [];

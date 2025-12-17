@@ -9,7 +9,7 @@ import { Ambassador } from '../sections/Ambassador';
 import { FooterCTA } from '../sections/FooterCTA';
 import { GeminiOrb } from '../GeminiOrb';
 import { Particles } from '../ui/Particles';
-import { AIAssistant } from '../ui/AIAssistant';
+
 
 export const Home: React.FC = () => {
   return (
@@ -45,7 +45,7 @@ export const Home: React.FC = () => {
         AI ASSISTANT
         Fixed floating element
       */}
-      <AIAssistant />
+
       
       {/* 
         SCROLLABLE CONTENT LAYER 

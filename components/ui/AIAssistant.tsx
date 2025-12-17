@@ -1,7 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { MessageSquare, Mic, Send, X, Sparkles, ChevronDown, User, Bot, Loader2, ExternalLink, MapPin } from 'lucide-react';
-import { GoogleGenAI, Type, FunctionDeclaration, GenerateContentResponse } from "@google/genai";
+import { MessageSquare, Mic, Send, X, Sparkles, ChevronDown, User, Bot, Loader2, ExternalLink, MapPin, Volume2, VolumeX } from 'lucide-react';
+import { GeminiService } from '../../services/GeminiService';
+import { VoiceVisualizer } from './VoiceVisualizer';
 
 // Types for chat messages
 interface Message {
@@ -18,6 +19,8 @@ export const AIAssistant: React.FC = () => {
   const [input, setInput] = useState('');
   const [isThinking, setIsThinking] = useState(false);
   const [isListening, setIsListening] = useState(false);
+  const [isSpeaking, setIsSpeaking] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
   
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const chatContainerRef = useRef<HTMLDivElement>(null);
@@ -44,28 +47,30 @@ export const AIAssistant: React.FC = () => {
     return `Could not find section: ${sectionId}`;
   };
 
-  // Define Tools
-  const tools = [
-    {
-      functionDeclarations: [
-        {
-          name: "scrollToSection",
-          description: "Scrolls the page to a specific section and highlights it. Use this when the user wants to see, go to, or navigate to a specific part of the page.",
-          parameters: {
-            type: Type.OBJECT,
-            properties: {
-              sectionId: {
-                type: Type.STRING,
-                description: "The ID of the section. Options: 'hero' (Intro), 'about' (What is Gemini), 'offer' (Student Offer), 'features' (Why Gemini/Edge), 'story' (Detailed Features), 'ambassador' (Sourabh Singh Profile), 'join' (Footer CTA).",
-              },
-            },
-            required: ["sectionId"],
-          },
-        },
-      ],
-    },
-    { googleSearch: {} } // Enable Search Grounding
-  ];
+  const speakText = (text: string) => {
+    if (!soundEnabled || !('speechSynthesis' in window)) return;
+
+    // Simple cleanup to avoid reading markdown
+    const cleanText = text.replace(/[*#_`]/g, '');
+
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(cleanText);
+    utterance.rate = 1.0;
+    utterance.pitch = 1;
+    
+    utterance.onstart = () => setIsSpeaking(true);
+    utterance.onend = () => setIsSpeaking(false);
+    utterance.onerror = () => setIsSpeaking(false);
+
+    window.speechSynthesis.speak(utterance);
+  };
+
+  const stopSpeaking = () => {
+    window.speechSynthesis.cancel();
+    setIsSpeaking(false);
+  };
+
+
 
   const handleSendMessage = async () => {
     if (!input.trim()) return;
@@ -76,67 +81,13 @@ export const AIAssistant: React.FC = () => {
     setIsThinking(true);
 
     try {
-      const apiKey = import.meta.env.VITE_GEMINI_API_KEY;
-      if (!apiKey) {
-        throw new Error("API Key not found");
-      }
-
-      const ai = new GoogleGenAI({ apiKey });
+      stopSpeaking();
       
-      const systemInstruction = `You are Gem, the official AI guide for the Google Gemini Student Ambassador Program website.
-      Your goal is to be helpful, witty, and engaging.
-
-      WEBSITE MAP & CONTEXT:
-      1. **Hero Section** (id: 'hero'): Intro, "Google Gemini for Students", Partner info.
-      2. **What is Gemini** (id: 'about'): Explains Gemini as an AI collaborator (not just a chatbot).
-      3. **Student Offer** (id: 'offer'): 12 months free Gemini Advanced + 2TB storage.
-      4. **The Gemini Edge** (id: 'features'): List of unique features (Live, Canvas, Veo, etc.).
-      5. **Story Mode** (id: 'story'): Detailed breakdown of features like Video Generation and Deep Research.
-      6. **Ambassador** (id: 'ambassador'): Profile of Sourabh Singh (Partner ID 12115).
-      7. **Join** (id: 'join'): Footer with "Join the Program" CTA via Google Form.
-
-      BEHAVIOR:
-      - If a user asks to navigate, see, or go to a section, ALWAYS use the 'scrollToSection' tool.
-      - If asked about real-world facts or recent news, use the Google Search tool.
-      - Keep responses concise (2-3 sentences) unless explaining a complex topic.
-      - Be enthusiastic about AI and student empowerment.
-      `;
-
-      const history = messages.map(m => ({
-        role: m.role,
-        parts: [{ text: m.text }]
-      }));
-
-      // Use generateContentStream for real-time feedback
-      let responseStream;
-      try {
-        console.log("Attempting with gemini-1.5-pro...");
-        responseStream = await ai.models.generateContentStream({
-          model: 'gemini-1.5-pro',
-          contents: [...history, { role: 'user', parts: [{ text: userMsg }] }],
-          config: {
-            systemInstruction: systemInstruction,
-            tools: tools,
-          }
-        });
-      } catch (error) {
-        console.warn("Pro model failed, switching to fallback (Flash)...", error);
-        try {
-           responseStream = await ai.models.generateContentStream({
-            model: 'gemini-1.5-flash',
-            contents: [...history, { role: 'user', parts: [{ text: userMsg }] }],
-            config: {
-              systemInstruction: systemInstruction,
-              tools: tools,
-            }
-          });
-        } catch (flashError) {
-           console.error("All models failed", flashError);
-           throw flashError; // Re-throw to be caught by the outer catch block
-        }
-      }
+      // Use the GeminiService to get the response stream
+      const responseStream = await GeminiService.streamResponse(messages, userMsg);
 
       let fullText = "";
+      let toolResponseText = "";
       let functionCalls: any[] = [];
       let groundingSources: { title: string; uri: string }[] = [];
       
@@ -170,10 +121,13 @@ export const AIAssistant: React.FC = () => {
           });
         }
       }
+      
+      if (fullText) {
+          speakText(fullText);
+      }
 
       // Handle Function Calls (Executed after stream to prevent UI jumping)
       if (functionCalls.length > 0) {
-        let toolResponseText = "";
         for (const call of functionCalls) {
           if (call.name === 'scrollToSection') {
             // @ts-ignore
@@ -189,6 +143,7 @@ export const AIAssistant: React.FC = () => {
               newArr[newArr.length - 1] = { ...newArr[newArr.length - 1], text: toolResponseText };
               return newArr;
            });
+           speakText(toolResponseText);
         }
       }
 
@@ -234,7 +189,10 @@ export const AIAssistant: React.FC = () => {
       recognition.continuous = false;
       recognition.interimResults = false;
 
-      recognition.onstart = () => setIsListening(true);
+      recognition.onstart = () => {
+        setIsListening(true);
+        stopSpeaking();
+      };
       recognition.onend = () => setIsListening(false);
       recognition.onresult = (event: any) => {
         const transcript = event.results[0][0].transcript;
@@ -256,123 +214,181 @@ export const AIAssistant: React.FC = () => {
       alert("Voice input is not supported in this browser.");
     }
   };
+  
+  // Draggable constraints (optional, can be removed for full freedom)
+  const constraintsRef = useRef(null);
 
   return (
     <>
-      {/* Floating Action Button */}
-      <motion.button
-        initial={{ scale: 0 }}
-        animate={{ scale: 1 }}
-        whileHover={{ scale: 1.1 }}
-        whileTap={{ scale: 0.9 }}
-        onClick={() => setIsOpen(!isOpen)}
-        className="fixed bottom-6 right-6 z-50 p-4 rounded-full bg-gradient-to-r from-google-blue via-purple-500 to-google-red shadow-[0_0_30px_rgba(66,133,244,0.5)] border border-white/20 text-white flex items-center justify-center overflow-hidden group"
-      >
-        <div className="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity" />
-        {isOpen ? <ChevronDown /> : <Sparkles className="animate-pulse" />}
-      </motion.button>
-
-      {/* Chat Window */}
-      <AnimatePresence>
-        {isOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: 20, scale: 0.9 }}
-            animate={{ opacity: 1, y: 0, scale: 1 }}
-            exit={{ opacity: 0, y: 20, scale: 0.9 }}
-            className="fixed bottom-24 right-6 z-50 w-[90vw] md:w-[400px] h-[500px] bg-black/80 backdrop-blur-xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden"
-          >
-            {/* Header */}
-            <div className="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between">
-              <div className="flex items-center gap-2">
-                <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-google-blue to-google-red flex items-center justify-center relative overflow-hidden">
-                   <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
-                   <Bot size={18} className="text-white relative z-10" />
-                </div>
-                <div>
-                   <h3 className="font-bold text-white text-sm">Gemini Guide</h3>
-                   <div className="flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
-                      <span className="text-xs text-gray-400">Gemini 1.5 Pro</span>
-                   </div>
-                </div>
-              </div>
-              <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
-                <X size={18} />
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
-              {messages.map((msg, i) => (
-                <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
-                  <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
-                    msg.role === 'user' 
-                      ? 'bg-google-blue text-white rounded-tr-none' 
-                      : 'bg-white/10 text-gray-200 rounded-tl-none border border-white/5'
-                  }`}>
-                    {msg.text}
-                  </div>
-                  
-                  {/* Grounding Sources Display */}
-                  {msg.groundingSources && msg.groundingSources.length > 0 && (
-                     <div className="mt-2 flex flex-wrap gap-2 max-w-[85%]">
-                        {msg.groundingSources.map((source, idx) => (
-                           <a 
-                             key={idx} 
-                             href={source.uri} 
-                             target="_blank" 
-                             rel="noopener noreferrer"
-                             className="text-[10px] flex items-center gap-1 px-2 py-1 rounded bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-gray-400 hover:text-google-blue"
-                           >
-                              <ExternalLink size={10} />
-                              <span className="truncate max-w-[100px]">{source.title}</span>
-                           </a>
-                        ))}
-                     </div>
-                  )}
-                </div>
-              ))}
-              {isThinking && messages[messages.length - 1]?.role === 'user' && (
-                 <div className="flex justify-start">
-                    <div className="bg-white/5 p-3 rounded-2xl rounded-tl-none flex gap-1 items-center">
-                       <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" />
-                       <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-100" />
-                       <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-200" />
+      <motion.div ref={constraintsRef} className="fixed inset-0 pointer-events-none z-50">
+        <motion.div
+          drag
+          dragMomentum={false}
+          initial={{ x: window.innerWidth - 100, y: window.innerHeight - 100 }}
+          className="pointer-events-auto absolute"
+          style={{ touchAction: "none" }}
+        >
+          <div className="relative">
+             {/* Floating Orb / Button */}
+            <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                onClick={() => setIsOpen(!isOpen)}
+                className={`relative z-50 w-16 h-16 rounded-full flex items-center justify-center shadow-[0_0_40px_rgba(66,133,244,0.6)] border border-white/20 backdrop-blur-md overflow-hidden transition-all duration-300 ${isOpen ? 'bg-black/80' : 'bg-gradient-to-tr from-google-blue via-purple-500 to-google-red'}`}
+            >
+                 {/* Internal Orb Animation */}
+                 {!isOpen && (
+                    <div className="absolute inset-0">
+                        <div className="absolute inset-0 bg-white/20 animate-pulse rounded-full" />
+                        <motion.div 
+                            animate={{ rotate: 360 }}
+                            transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
+                            className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/10 to-transparent rounded-full"
+                        />
                     </div>
-                 </div>
-              )}
-              <div ref={messagesEndRef} />
-            </div>
+                 )}
+                
+                {isOpen ? (
+                    <ChevronDown className="text-white relative z-10" />
+                ) : (
+                    <Sparkles className="text-white relative z-10 animate-pulse" />
+                )}
+            </motion.button>
+            
+            {/* Draggable Chat Window (Anchored to the button) */}
+            <AnimatePresence>
+                {isOpen && (
+                <motion.div
+                    initial={{ opacity: 0, scale: 0.8, y: 20, x: 0 }}
+                    animate={{ opacity: 1, scale: 1, y: -520, x: -340 }} // Position relative to the button (bottom-right origin assumption)
+                    exit={{ opacity: 0, scale: 0.8, y: 20 }}
+                    className="absolute w-[90vw] md:w-[400px] h-[500px] bg-black/80 backdrop-blur-2xl border border-white/10 rounded-3xl shadow-2xl flex flex-col overflow-hidden origin-bottom-right"
+                >
+                     {/* Header */}
+                    <div className="p-4 border-b border-white/10 bg-white/5 flex items-center justify-between cursor-move" onPointerDownCapture={(e) => e.stopPropagation()}>
+                    <div className="flex items-center gap-2">
+                        <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-google-blue to-google-red flex items-center justify-center relative overflow-hidden">
+                        <div className="absolute inset-0 bg-white/20 animate-pulse"></div>
+                        <Bot size={18} className="text-white relative z-10" />
+                        </div>
+                        <div>
+                        <h3 className="font-bold text-white text-sm">Gemini Companion</h3>
+                        <div className="flex items-center gap-1">
+                            <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse" />
+                            <span className="text-xs text-gray-400">Gemini 1.5 Flash</span>
+                        </div>
+                        </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                        <button 
+                            onClick={() => {
+                                setSoundEnabled(!soundEnabled);
+                                if(soundEnabled) stopSpeaking();
+                            }} 
+                            className="p-2 hover:bg-white/10 rounded-full transition-colors text-gray-400 hover:text-white"
+                        >
+                            {soundEnabled ? <Volume2 size={18} /> : <VolumeX size={18} />}
+                        </button>
+                        <button onClick={() => setIsOpen(false)} className="p-2 hover:bg-white/10 rounded-full transition-colors">
+                            <X size={18} />
+                        </button>
+                    </div>
+                    </div>
 
-            {/* Input */}
-            <div className="p-4 border-t border-white/10 bg-black/20">
-               <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 focus-within:border-google-blue/50 transition-colors">
-                  <input 
-                    type="text" 
-                    value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
-                    placeholder="Ask about Gemini..."
-                    className="flex-1 bg-transparent border-none outline-none text-sm text-white placeholder-gray-500"
-                  />
-                  <button 
-                    onClick={startListening}
-                    className={`p-2 rounded-full transition-colors ${isListening ? 'text-red-500 bg-red-500/10 animate-pulse' : 'text-gray-400 hover:text-white'}`}
-                  >
-                    <Mic size={18} />
-                  </button>
-                  <button 
-                    onClick={handleSendMessage}
-                    disabled={!input.trim() || isThinking}
-                    className="p-2 bg-white/10 rounded-full text-google-blue hover:bg-white/20 transition-colors disabled:opacity-50"
-                  >
-                    <Send size={18} />
-                  </button>
-               </div>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                    {/* Messages */}
+                    <div ref={chatContainerRef} className="flex-1 overflow-y-auto p-4 space-y-4 scrollbar-thin scrollbar-thumb-white/10 scrollbar-track-transparent">
+                    {messages.map((msg, i) => (
+                        <div key={i} className={`flex flex-col ${msg.role === 'user' ? 'items-end' : 'items-start'}`}>
+                        <div className={`max-w-[85%] p-3 rounded-2xl text-sm leading-relaxed ${
+                            msg.role === 'user' 
+                            ? 'bg-google-blue text-white rounded-tr-none' 
+                            : 'bg-white/10 text-gray-200 rounded-tl-none border border-white/5'
+                        }`}>
+                            {msg.text}
+                        </div>
+                        
+                        {/* Grounding Sources Display */}
+                        {msg.groundingSources && msg.groundingSources.length > 0 && (
+                            <div className="mt-2 flex flex-wrap gap-2 max-w-[85%]">
+                                {msg.groundingSources.map((source, idx) => (
+                                    <a 
+                                    key={idx} 
+                                    href={source.uri} 
+                                    target="_blank" 
+                                    rel="noopener noreferrer"
+                                    className="text-[10px] flex items-center gap-1 px-2 py-1 rounded bg-white/5 hover:bg-white/10 border border-white/5 transition-colors text-gray-400 hover:text-google-blue"
+                                    >
+                                        <ExternalLink size={10} />
+                                        <span className="truncate max-w-[100px]">{source.title}</span>
+                                    </a>
+                                ))}
+                            </div>
+                        )}
+                        </div>
+                    ))}
+                    {isThinking && messages[messages.length - 1]?.role === 'user' && (
+                        <div className="flex justify-start">
+                            <div className="bg-white/5 p-3 rounded-2xl rounded-tl-none flex gap-1 items-center">
+                            <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce" />
+                            <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-100" />
+                            <span className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-bounce delay-200" />
+                            </div>
+                        </div>
+                    )}
+                    <div ref={messagesEndRef} />
+                    </div>
+
+                    {/* Input */}
+                    <div className="p-4 border-t border-white/10 bg-black/20">
+                    <div className="flex items-center gap-2 bg-white/5 border border-white/10 rounded-full px-4 py-2 focus-within:border-google-blue/50 transition-colors">
+                        <input 
+                            type="text" 
+                            value={input}
+                            onChange={(e) => setInput(e.target.value)}
+                            onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+                            placeholder="Ask Gemini..."
+                            className="flex-1 bg-transparent border-none outline-none text-sm text-white placeholder-gray-500"
+                        />
+                        <button 
+                            onClick={startListening}
+                            className={`p-2 rounded-full transition-colors relative ${isListening ? 'text-red-500 bg-red-500/10' : 'text-gray-400 hover:text-white'}`}
+                        >
+                            {isListening ? (
+                                <div className="absolute inset-0 flex items-center justify-center">
+                                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-400 opacity-75"></span>
+                                </div>
+                            ) : null}
+                            <Mic size={18} className="relative z-10" />
+                        </button>
+                        <button 
+                            onClick={handleSendMessage}
+                            disabled={!input.trim() || isThinking}
+                            className="p-2 bg-white/10 rounded-full text-google-blue hover:bg-white/20 transition-colors disabled:opacity-50"
+                        >
+                            <Send size={18} />
+                        </button>
+                    </div>
+                    </div>
+                    
+                    {/* Voice Visualizer Indicator */}
+                    <AnimatePresence>
+                        {(isListening || isSpeaking) && (
+                            <motion.div 
+                                initial={{ height: 0 }}
+                                animate={{ height: 40 }}
+                                exit={{ height: 0 }}
+                                className="bg-black/40 border-t border-white/10 flex items-center justify-center overflow-hidden"
+                            >
+                                <VoiceVisualizer isActive={isListening || isSpeaking} mode={isListening ? 'listening' : 'speaking'} />
+                            </motion.div>
+                        )}
+                    </AnimatePresence>
+                </motion.div>
+                )}
+            </AnimatePresence>
+          </div>
+        </motion.div>
+      </motion.div>
     </>
   );
 };

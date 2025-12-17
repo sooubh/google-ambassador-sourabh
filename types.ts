@@ -1,6 +1,11 @@
 import React from 'react';
 import { ThreeElements } from '@react-three/fiber';
 
+export interface ChatMessage {
+  role: 'user' | 'model' | 'assistant';
+  text: string;
+}
+
 export interface Feature {
   id: string;
   title: string;

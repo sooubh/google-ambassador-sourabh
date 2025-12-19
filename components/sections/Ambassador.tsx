@@ -29,7 +29,7 @@ export const Ambassador: React.FC = () => {
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-google-blue to-transparent opacity-50"></div>
                   <p className="font-mono text-google-blue tracking-[0.2em] text-sm mb-4 uppercase font-bold">Official Partner ID</p>
                   <p className="font-mono text-5xl md:text-7xl font-black text-white tracking-widest drop-shadow-2xl uppercase">
-                    sooubh
+                    12115
                   </p>
               </div>
           </div>
@@ -57,9 +57,9 @@ export const Ambassador: React.FC = () => {
               {/* SITRC Logo */}
               <div className="bg-white p-4 rounded-xl h-24 w-64 flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-lg shadow-white/5 hover:shadow-[0_0_30px_rgba(66,133,244,0.3)]">
                  <img 
-                   src="https://sitrc.sandipfoundation.org/wp-content/uploads/sites/6/2021/08/logo-sitrc.png" 
+                   src="/assets/sitrc-logo.png" 
                    alt="Sandip Foundation's SITRC" 
-                   className="h-full w-full object-contain"
+                   className="h-full w-full object-contain hover:scale-105 transition-transform"
                  />
               </div>
 

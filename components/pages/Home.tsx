@@ -1,6 +1,6 @@
 import React, { Suspense } from 'react';
 import { Canvas } from '@react-three/fiber';
-import { GeminiAssistant } from '../chat/GeminiAssistant';
+import { ChatBot } from '../ui/ChatBot';
 import { GeminiOrb } from '../GeminiOrb';
 import { Particles } from '../ui/Particles';
 
@@ -46,7 +46,7 @@ export const Home: React.FC = () => {
         <Footer />
       </div>
 
-      <GeminiAssistant />
+      <ChatBot />
     </main>
   );
 };

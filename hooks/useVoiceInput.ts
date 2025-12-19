@@ -22,8 +22,8 @@ export const useVoiceInput = (): UseVoiceInputReturn => {
 
             if (SpeechRecognition) {
                 recognitionRef.current = new SpeechRecognition();
-                recognitionRef.current.continuous = false; // Stop after one sentence/phrase
-                recognitionRef.current.interimResults = true; // Show results as they are spoken
+                recognitionRef.current.continuous = false; // Chat-style: stop after one utterance
+                recognitionRef.current.interimResults = true;
                 recognitionRef.current.lang = 'en-US';
 
                 recognitionRef.current.onstart = () => {
@@ -42,13 +42,22 @@ export const useVoiceInput = (): UseVoiceInputReturn => {
                     for (let i = event.resultIndex; i < event.results.length; i++) {
                         currentTranscript += event.results[i][0].transcript;
                     }
-                    console.log("useVoiceInput: Transcript received:", currentTranscript);
-                    setTranscript(currentTranscript);
+                    if (currentTranscript.trim()) {
+                        setTranscript(currentTranscript);
+                    }
                 };
 
                 recognitionRef.current.onerror = (event: any) => {
                     console.error("useVoiceInput: Speech recognition error", event.error);
-                    setError(event.error);
+                    if (event.error === 'no-speech') {
+                        setError('No speech detected. Please try again.');
+                    } else if (event.error === 'network') {
+                        setError('Network error. Check your connection.');
+                    } else if (event.error === 'not-allowed') {
+                        setError('Microphone permission denied.');
+                    } else {
+                        setError(`Speech recognition error: ${event.error}`);
+                    }
                     setIsListening(false);
                 };
             } else {
@@ -61,11 +70,16 @@ export const useVoiceInput = (): UseVoiceInputReturn => {
     const startListening = useCallback(() => {
         if (recognitionRef.current && !isListening) {
             try {
-                console.log("useVoiceInput: requested startListening.");
+                setError(null);
                 setTranscript('');
                 recognitionRef.current.start();
             } catch (e) {
                 console.error("Error starting speech recognition:", e);
+                // If already started, we might get an error, ignore it or restart
+                if (isListening) {
+                    recognitionRef.current.stop();
+                    setTimeout(() => recognitionRef.current.start(), 100);
+                }
             }
         }
     }, [isListening]);

@@ -96,7 +96,7 @@ export class GeminiLiveService {
 
         // @ts-ignore - The SDK types for live.connect might vary by version
         this.sessionPromise = this.ai.live.connect({
-            model: 'gemini-2.5-flash', // Using 2.5 Flash as requested
+            model: 'models/gemini-2.5-flash-native-audio-preview-12-2025',
             callbacks: {
                 onopen: () => {
                     console.log("GeminiLiveService: WebSocket connection opened.");

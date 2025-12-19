@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Download, Mail, ExternalLink, Award } from 'lucide-react';
+import { Download, Mail, ExternalLink, Award, GraduationCap } from 'lucide-react';
 import { SectionReveal } from '../ui/SectionReveal';
 import profileImage from '../../assets/profile-ambassador.png';
 
@@ -70,6 +70,40 @@ export const AboutMe: React.FC = () => {
                   <p className="text-gray-300 text-lg leading-relaxed mb-8">
                     I am a Computer Engineering undergraduate with a strong interest in Artificial Intelligence and modern web development. I enjoy building user-centric, high-performance applications and learning through hands-on projects, hackathons, and experimentation.
                   </p>
+
+                  {/* Education Timeline */}
+                  <div className="relative border-l-2 border-white/10 pl-8 ml-4 mb-12 space-y-10">
+                    {[
+                      {
+                        year: '2022 - 2026 (Expected)',
+                        title: 'B.Tech in Computer Engineering',
+                        institution: "Sandip Foundation's SITRC",
+                        desc: 'Specializing in AI/ML and Full Stack Development.'
+                      },
+                      {
+                        year: '2024 - Present',
+                        title: 'Google Gemini Ambassador',
+                        institution: 'Google Student Developer Clubs',
+                        desc: 'Leading AI workshops and community tech events.'
+                      }
+                    ].map((item, index) => (
+                      <motion.div 
+                        key={index}
+                        initial={{ opacity: 0, x: -20 }}
+                        whileInView={{ opacity: 1, x: 0 }}
+                        transition={{ delay: index * 0.2 }}
+                        className="relative"
+                      >
+                        <div className="absolute -left-[41px] top-1 h-5 w-5 rounded-full border-2 border-google-blue bg-black z-10"></div>
+                        <span className="text-xs font-mono text-google-blue uppercase tracking-widest mb-1 block">{item.year}</span>
+                        <h4 className="text-lg font-bold text-white">{item.title}</h4>
+                        <p className="text-gray-400 text-sm flex items-center gap-2 mt-1">
+                           <GraduationCap className="w-3 h-3" />
+                           {item.institution}
+                        </p>
+                      </motion.div>
+                    ))}
+                  </div>
                   
                   {/* Google Student Ambassador Highlight Block */}
                   <div className="bg-white/5 border-l-4 border-google-blue rounded-r-xl p-6 mb-10 backdrop-blur-sm">

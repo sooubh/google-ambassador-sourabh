@@ -60,6 +60,7 @@ import { ChatMessage } from "../types";
 // ---------------- SERVICE ----------------
 export const GeminiService = {
     async streamResponse(history: ChatMessage[], userMsg: string) {
+        // Construct content from history and new user message
         const contents: Content[] = [
             ...history.map(m => ({
                 role: m.role === 'assistant' ? 'model' : m.role,
@@ -71,14 +72,24 @@ export const GeminiService = {
             }
         ];
 
-        return ai.models.generateContentStream({
-            model: "gemini-2.5-flash",
-            contents,
-            config: {
-                systemInstruction: systemInstruction,
-                tools: TOOLS,
-                responseModalities: ["TEXT"]
-            }
-        });
+        try {
+            const streamResult = await ai.models.generateContentStream({
+                model: "gemini-1.5-flash",
+                contents,
+                config: {
+                    systemInstruction: systemInstruction,
+                    tools: TOOLS,
+                    responseModalities: ["TEXT"],
+                    candidateCount: 1,
+                    temperature: 0.7, // Add temperature for consistent but creative output
+                }
+            });
+
+            return streamResult;
+
+        } catch (error) {
+            console.error("GeminiService: Error starting stream", error);
+            throw new Error("Failed to connect to AI service.");
+        }
     }
 };

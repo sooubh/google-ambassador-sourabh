@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { motion, useMotionValue, useSpring } from 'framer-motion';
-import { ArrowDown, Sparkles, ExternalLink } from 'lucide-react';
+import { ArrowDown, Sparkles, ExternalLink, Linkedin, Instagram } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 export const Hero: React.FC = () => {
@@ -101,6 +101,39 @@ export const Hero: React.FC = () => {
           </div>
 
         </motion.div>
+
+          {/* Social Links */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, delay: 0.2, ease: "easeOut" }}
+            className="flex gap-4 mt-8 justify-center"
+          >
+            <motion.a
+              href="https://www.linkedin.com/in/sooubh"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-4 rounded-full bg-white/5 border border-white/10 hover:bg-[#0077b5]/20 hover:border-[#0077b5]/50 transition-all duration-300 text-white group"
+              title="LinkedIn"
+            >
+              <Linkedin className="w-6 h-6 group-hover:text-[#0077b5] transition-colors" />
+            </motion.a>
+            <motion.a
+              href="https://www.instagram.com/sourabh_singg"
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              className="p-4 rounded-full bg-white/5 border border-white/10 hover:bg-[#E1306C]/20 hover:border-[#E1306C]/50 transition-all duration-300 text-white group"
+              title="Instagram"
+            >
+              <Instagram className="w-6 h-6 group-hover:text-[#E1306C] transition-colors" />
+            </motion.a>
+          </motion.div>
+
+
 
       </div>
 

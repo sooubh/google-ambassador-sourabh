@@ -205,7 +205,10 @@ export const ChatBot: React.FC = () => {
                     const sectionId = part.functionCall.args?.sectionId;
                     if (sectionId) {
                         const el = document.getElementById(sectionId);
-                        el?.scrollIntoView({ behavior: 'smooth' });
+                        if (el) {
+                            el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            console.log(`🚀 Navigating to section: ${sectionId}`);
+                        }
                     }
                 }
             }

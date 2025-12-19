@@ -17,7 +17,7 @@ export const FooterCTA: React.FC = () => {
            </motion.h2>
            
            <p className="text-lg md:text-xl text-gray-300 mb-10">
-              Fill out the form below to kickstart your journey with Google AI.
+              Fill out the form below to connect, collaborate, or join the Google Student Ambassador community.
            </p>
            
            <div className="w-full bg-white/5 backdrop-blur-sm rounded-xl overflow-hidden border border-white/10 shadow-2xl">
@@ -32,15 +32,7 @@ export const FooterCTA: React.FC = () => {
               </iframe>
            </div>
            
-           <div className="mt-12 flex gap-6 text-gray-600 text-sm justify-center items-center">
-              <span>© 2024 Google Student Program</span>
-              <span>•</span>
-              <Link to="/services" className="hover:text-google-blue transition-colors">AI Services</Link>
-              <span>•</span>
-              <span>Privacy Policy</span>
-              <span>•</span>
-              <span>Terms</span>
-           </div>
+
          </SectionReveal>
       </div>
     </section>

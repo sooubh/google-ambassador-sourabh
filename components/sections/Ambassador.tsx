@@ -28,8 +28,8 @@ export const Ambassador: React.FC = () => {
               <div className="relative bg-black/80 border border-google-blue/50 rounded-2xl px-12 py-8 backdrop-blur-xl shadow-[0_0_50px_rgba(66,133,244,0.15)] overflow-hidden">
                   <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-google-blue to-transparent opacity-50"></div>
                   <p className="font-mono text-google-blue tracking-[0.2em] text-sm mb-4 uppercase font-bold">Official Partner ID</p>
-                  <p className="font-mono text-5xl md:text-7xl font-black text-white tracking-widest drop-shadow-2xl">
-                    12115
+                  <p className="font-mono text-5xl md:text-7xl font-black text-white tracking-widest drop-shadow-2xl uppercase">
+                    sooubh
                   </p>
               </div>
           </div>

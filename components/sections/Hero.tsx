@@ -29,21 +29,14 @@ export const Hero: React.FC = () => {
     const xPct = (mouseX / width) - 0.5;
     const yPct = (mouseY / height) - 0.5;
     
-    // Move text by up to 30px in the direction of the mouse
-    x.set(xPct * 30);
-    y.set(yPct * 30);
+    // Move text by up to 20px (subtler than before)
+    x.set(xPct * 20);
+    y.set(yPct * 20);
   };
 
   const handleMouseLeave = () => {
     x.set(0);
     y.set(0);
-  };
-
-  const handleScrollDown = () => {
-    window.scrollTo({
-      top: window.innerHeight,
-      behavior: 'smooth'
-    });
   };
 
   return (
@@ -53,67 +46,71 @@ export const Hero: React.FC = () => {
       onMouseLeave={handleMouseLeave}
       className="relative min-h-screen w-full flex items-center justify-center overflow-hidden bg-transparent"
     >
-      {/* Background Gradients - Adjusted for blending */}
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(66,133,244,0.1),transparent_60%)] pointer-events-none" />
+      {/* Background Gradients - Subtle & Premium */}
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(66,133,244,0.08),transparent_70%)] pointer-events-none" />
       
-      {/* Content */}
-      <div className="relative z-20 text-center px-4 max-w-4xl mx-auto mt-20 md:mt-0">
+      {/* Content Container - Centered & Text Focused */}
+      <div className="relative z-20 w-full max-w-5xl mx-auto px-4 text-center">
+        
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
+          className="flex flex-col items-center"
         >
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-6 hover:bg-white/10 transition-colors">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/5 border border-white/10 backdrop-blur-md mb-8 hover:bg-white/10 transition-colors">
             <Sparkles className="w-4 h-4 text-google-yellow" />
-            <span className="text-sm font-medium tracking-wide uppercase">Partner: Sourabh Singh</span>
+            <span className="text-sm font-medium tracking-wide uppercase text-gray-300">Google Ambassador & Partner</span>
           </div>
           
+          {/* Main Headline */}
           <motion.h1 
             style={{ x: xSpring, y: ySpring }}
-            className="text-5xl md:text-8xl font-bold tracking-tighter mb-10 text-white cursor-default"
+            className="text-6xl md:text-9xl font-bold tracking-tighter mb-8 text-white cursor-default leading-[0.9]"
           >
-            Google <span className="gemini-gradient-text">Gemini</span> <br />
-            for Students
+            Sourabh <br />
+            <span className="gemini-gradient-text">Singh</span>
           </motion.h1>
           
-          <div className="flex flex-col md:flex-row gap-4 justify-center items-center">
-            <motion.a
-              href="https://docs.google.com/forms/d/e/1FAIpQLSffT05FZXoT9BcOBtuVRDPpMu_P9CYOFOZASqmUAnkOQHkS4A/viewform"
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="group relative overflow-hidden bg-white text-black px-8 py-4 rounded-full font-bold text-lg flex items-center gap-2 shadow-[0_0_20px_rgba(255,255,255,0.3)] hover:shadow-[0_0_40px_rgba(66,133,244,0.6)] transition-all cursor-pointer"
-            >
-              <span className="relative z-10 flex items-center gap-2">
-                Join via Google Form
-                <ExternalLink className="w-5 h-5 text-google-blue transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-              </span>
-              {/* Shine effect */}
-              <div className="absolute inset-0 bg-gradient-to-r from-transparent via-gray-100/50 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
-            </motion.a>
-            
-            <Link to="/services">
+          {/* Subtitle */}
+          <p className="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto font-light leading-relaxed">
+            Bridging the gap between students and the future of AI.
+          </p>
+          
+          {/* CTAs */}
+          <div className="flex flex-col sm:flex-row gap-6 justify-center items-center w-full max-w-lg mx-auto">
+            <Link to="/services" className="w-full sm:w-auto">
                 <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  className="px-8 py-4 rounded-full border border-white/20 hover:bg-white/10 backdrop-blur-sm font-medium transition-colors cursor-pointer text-white"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
+                  className="w-full sm:w-auto px-10 py-5 rounded-full bg-white text-black font-bold text-lg hover:shadow-[0_0_40px_rgba(255,255,255,0.3)] transition-all duration-300 flex items-center justify-center gap-2"
                 >
-                  Try AI Services
+                  Explore My Work
                 </motion.button>
             </Link>
+            
+            <motion.a
+              href="mailto:sourabh@example.com"
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              className="w-full sm:w-auto px-10 py-5 rounded-full border border-white/20 text-white font-medium text-lg hover:bg-white/5 transition-all duration-300 backdrop-blur-sm flex items-center justify-center gap-2"
+            >
+              Get in Touch
+            </motion.a>
           </div>
+
         </motion.div>
+
       </div>
 
       <motion.div 
-        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/50 z-20"
+        className="absolute bottom-10 left-1/2 -translate-x-1/2 text-white/30 z-20 hidden md:flex flex-col items-center gap-2"
         animate={{ y: [0, 10, 0] }}
         transition={{ duration: 2, repeat: Infinity }}
       >
-        <div className="flex flex-col items-center gap-2">
-          <span className="text-xs uppercase tracking-widest">Scroll</span>
-          <ArrowDown className="w-5 h-5" />
-        </div>
+        <span className="text-[10px] uppercase tracking-[0.2em]">Scroll to Discover</span>
+        <ArrowDown className="w-4 h-4" />
       </motion.div>
     </section>
   );

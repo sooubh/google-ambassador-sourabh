@@ -112,7 +112,7 @@ export const Ambassador: React.FC = () => {
               transition={{ delay: 0.5 }}
             >
                <a
-                  href="mailto:sourabh@example.com"
+                  href="mailto:sourabh3527@gmail.com"
                   className="group inline-flex items-center gap-3 px-8 py-3 rounded-full bg-white/5 border border-white/10 hover:bg-white/10 hover:border-google-blue/50 transition-all duration-300 backdrop-blur-md cursor-pointer"
                >
                   <div className="p-2 rounded-full bg-google-blue/20 text-google-blue group-hover:scale-110 transition-transform">

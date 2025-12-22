@@ -1,20 +1,39 @@
-import React, { Suspense } from 'react';
+import React, { Suspense, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Canvas } from '@react-three/fiber';
 import { ChatBot } from '../ui/ChatBot';
 import { GeminiOrb } from '../GeminiOrb';
 import { Particles } from '../ui/Particles';
+import { FloatingNavbar } from '../ui/FloatingNavbar';
 
 // Sections
 import { Hero } from '../sections/Hero';
-import { AboutMe } from '../sections/AboutMe';
-import { StudentOffer } from '../sections/StudentOffer';
-import { WhyDifferent } from '../sections/WhyDifferent';
-import { StoryMode } from '../sections/StoryMode';
-import { Ambassador } from '../sections/Ambassador';
-import { FooterCTA } from '../sections/FooterCTA';
-import { Footer } from '../sections/Footer';
+import { Story } from '../sections/Story';
+import { Objectives } from '../sections/Objectives';
+import { Universe } from '../sections/Universe';
+import { RealProjects } from '../sections/RealProjects';
+import { Achievements } from '../sections/Achievements';
+import { Building } from '../sections/Building';
+import { Contact } from '../sections/Contact';
 
 export const Home: React.FC = () => {
+    const location = useLocation();
+
+    useEffect(() => {
+        if (location.state && (location.state as any).scrollTo) {
+            const scrollToId = (location.state as any).scrollTo;
+            const element = document.getElementById(scrollToId);
+            if (element) {
+                // Small delay to ensure rendering
+                setTimeout(() => {
+                    element.scrollIntoView({ behavior: 'smooth' });
+                }, 100);
+                // Clear state to prevent scroll on refresh (optional but good practice)
+                window.history.replaceState({}, document.title);
+            }
+        }
+    }, [location]);
+
   return (
     <main className="bg-black text-white selection:bg-google-blue selection:text-white relative w-full overflow-x-hidden min-h-screen">
       
@@ -36,16 +55,19 @@ export const Home: React.FC = () => {
             <Particles />
         </div>
 
-        <div id="hero"><Hero /></div>
-        <div id="about"><AboutMe /></div>
-        <div id="offer"><StudentOffer /></div>
-        <div id="join"><FooterCTA /></div>
-        <div id="features"><WhyDifferent /></div>
-        <div id="story"><StoryMode /></div>
-        <div id="ambassador"><Ambassador /></div>
-        <Footer />
+        <Hero />
+
+        <div id="section-s"><Story /></div>
+        <div id="section-o"><Objectives /></div>
+        <div id="section-u"><Universe /></div>
+        <div id="section-r"><RealProjects /></div>
+        <div id="section-a"><Achievements /></div>
+        <div id="section-b"><Building /></div>
+        <div id="section-h"><Contact /></div>
+
       </div>
 
+      <FloatingNavbar />
       <ChatBot />
     </main>
   );

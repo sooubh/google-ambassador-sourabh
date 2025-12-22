@@ -1,0 +1,176 @@
+import React from 'react';
+import { motion } from 'framer-motion';
+import { ArrowUpRight, Github, ExternalLink, Layers, Terminal, Sparkles } from 'lucide-react';
+
+const projects = [
+    {
+        id: "01",
+        title: "StockHealth AI",
+        category: "FinTech & AI",
+        desc: "An advanced market intelligence dashboard. It leverages machine learning models to provide real-time stock health scores, predictive trend analysis, and automated risk assessments.",
+        tags: ["React", "Python", "TensorFlow", "FastAPI"],
+        link: "#",
+        github: "#",
+        color: "from-green-400 to-emerald-600",
+        shadow: "shadow-green-500/20"
+    },
+    {
+        id: "02",
+        title: "Gemini Portfolio",
+        category: "Creative Dev",
+        desc: "A next-generation personal website featuring voice-controlled navigation, 3D solar system visualizations, and a fully integrated AI assistant powered by Google's Gemini Pro.",
+        tags: ["Three.js", "Gemini API", "R3F", "Framer Motion"],
+        link: "#",
+        github: "#",
+        color: "from-blue-400 to-purple-600",
+        shadow: "shadow-blue-500/20"
+    },
+    {
+        id: "03",
+        title: "DateVibe",
+        category: "Mobile App",
+        desc: "A modern dating platform focused on algorithm-based compatibility matching. Features real-time chat, profile verification, and an intuitive swipe-based interface.",
+        tags: ["Flutter", "Firebase", "Dart", "Cloud Functions"],
+        link: "#",
+        github: "#",
+        color: "from-pink-400 to-rose-600",
+        shadow: "shadow-pink-500/20"
+    }
+];
+
+export const RealProjects: React.FC = () => {
+  return (
+    <section className="min-h-screen py-32 relative z-10 bg-transparent overflow-hidden">
+      
+      {/* Background Decor */}
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-blue-600/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="container mx-auto px-6 max-w-7xl relative z-10">
+        
+        {/* Header */}
+        <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="mb-24 md:flex md:items-end md:justify-between border-b border-white/10 pb-12"
+        >
+            <div className="max-w-2xl">
+                <h2 className="text-sm font-bold text-google-blue uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                    <span className="w-8 h-px bg-google-blue"></span>
+                    04 — Real Projects
+                </h2>
+                <h3 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+                    Architecting <br/>
+                    <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Digital Solutions</span>
+                </h3>
+            </div>
+            <div className="hidden md:block">
+                <p className="text-gray-400 max-w-xs text-right text-sm leading-relaxed">
+                    Selected works showcasing full-stack capabilities, AI integration, and user-centric design.
+                </p>
+            </div>
+        </motion.div>
+
+        {/* Projects Stack */}
+        <div className="flex flex-col gap-32">
+            {projects.map((project, index) => (
+                <motion.div 
+                    key={index}
+                    initial={{ opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    viewport={{ once: true, margin: "-100px" }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
+                    className="group"
+                >
+                    <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                        
+                        {/* 1. Project Visual / Preview Card */}
+                        <div className={`lg:col-span-7 relative ${index % 2 === 1 ? 'lg:order-2' : ''}`}>
+                             <div className={`
+                                relative rounded-3xl overflow-hidden aspect-[16/10] bg-black/40 border border-white/10 
+                                group-hover:border-white/20 transition-all duration-500 shadow-2xl ${project.shadow}
+                             `}>
+                                 {/* Placeholder/Gradient Content */}
+                                 <div className={`absolute inset-0 bg-gradient-to-br ${project.color} opacity-10 group-hover:opacity-20 transition-opacity duration-500`} />
+                                 
+                                 {/* "Mockup" Elements */}
+                                 <div className="absolute inset-x-8 top-8 bottom-0 bg-white/5 rounded-t-xl border-t border-l border-r border-white/10 backdrop-blur-sm transform translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                                     <div className="absolute inset-0 flex items-center justify-center">
+                                         <div className="text-center">
+                                             <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${project.color} mx-auto mb-4 flex items-center justify-center shadow-lg`}>
+                                                 <Layers className="text-white w-8 h-8" />
+                                             </div>
+                                             <span className="text-white/40 font-mono text-sm uppercase tracking-widest">
+                                                 Project Preview
+                                             </span>
+                                         </div>
+                                     </div>
+                                 </div>
+
+                                 {/* Hover Overlay */}
+                                 <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">
+                                     <a href={project.github} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-white/10 hover:bg-white text-white hover:text-black transition-all transform scale-90 group-hover:scale-100 duration-300">
+                                         <Github size={24} />
+                                     </a>
+                                     <a href={project.link} target="_blank" rel="noopener noreferrer" className="p-4 rounded-full bg-white/10 hover:bg-white text-white hover:text-black transition-all transform scale-90 group-hover:scale-100 duration-300 delay-75">
+                                         <ExternalLink size={24} />
+                                     </a>
+                                 </div>
+                             </div>
+                        </div>
+
+                        {/* 2. Project Details */}
+                        <div className={`lg:col-span-5 ${index % 2 === 1 ? 'lg:order-1 lg:text-right' : ''}`}>
+                            <div className={`flex items-center gap-4 mb-6 ${index % 2 === 1 ? 'justify-end' : ''}`}>
+                                <span className={`text-5xl font-bold bg-clip-text text-transparent bg-gradient-to-br ${project.color} opacity-30`}>
+                                    {project.id}
+                                </span>
+                                <span className="h-px w-12 bg-white/10"></span>
+                                <span className="text-sm font-mono text-gray-400 uppercase tracking-wider">
+                                    {project.category}
+                                </span>
+                            </div>
+                            
+                            <h3 className="text-4xl font-bold text-white mb-6 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-gray-400 transition-all duration-300">
+                                {project.title}
+                            </h3>
+                            
+                            <p className="text-gray-400 text-lg leading-relaxed mb-8">
+                                {project.desc}
+                            </p>
+
+                            <div className={`flex flex-wrap gap-2 mb-8 ${index % 2 === 1 ? 'justify-end' : ''}`}>
+                                {project.tags.map(tag => (
+                                    <span key={tag} className="px-3 py-1.5 rounded-full bg-white/5 border border-white/10 text-xs font-medium text-gray-300">
+                                        {tag}
+                                    </span>
+                                ))}
+                            </div>
+
+                            <div className={`flex items-center gap-4 ${index % 2 === 1 ? 'justify-end' : ''}`}>
+                                <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white hover:text-google-blue transition-colors group/link">
+                                    <span className="border-b border-transparent group-hover/link:border-google-blue">View Live</span>
+                                    <ArrowUpRight className="w-4 h-4 transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
+                                </a>
+                            </div>
+                        </div>
+
+                    </div>
+                </motion.div>
+            ))}
+        </div>
+
+        <div className="mt-40 text-center">
+            <a href="https://github.com/sooubh" target="_blank" rel="noreferrer" className="inline-flex flex-col items-center gap-4 group cursor-pointer">
+                <span className="text-gray-500 text-sm tracking-widest uppercase group-hover:text-white transition-colors">See more archives</span>
+                <div className="w-12 h-12 rounded-full border border-white/20 flex items-center justify-center group-hover:bg-white group-hover:border-white transition-all duration-300">
+                    <Github className="w-5 h-5 text-gray-400 group-hover:text-black transition-colors" />
+                </div>
+            </a>
+        </div>
+
+      </div>
+    </section>
+  );
+};

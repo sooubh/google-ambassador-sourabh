@@ -1,4 +1,4 @@
-import React, { useState, Suspense } from 'react';
+import React, { useState, Suspense, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Canvas } from '@react-three/fiber';
 import { Mail, Calendar, MessageCircle, ChevronDown, Send, Check, Linkedin, Github, Twitter, Instagram } from 'lucide-react';
@@ -9,6 +9,13 @@ import { Particles } from '../ui/Particles';
 import { HeaderLogo } from '../ui/HeaderLogo';
 
 export const ContactPage: React.FC = () => {
+    useEffect(() => {
+        document.title = "Contact | Sourabh Singh";
+        return () => {
+            document.title = "Sourabh Singh | Gemini Ambassador"; // Restore on unmount
+        };
+    }, []);
+
     return (
         <div className="bg-black min-h-screen text-white selection:bg-google-blue selection:text-white pb-20 relative w-full overflow-x-hidden">
             

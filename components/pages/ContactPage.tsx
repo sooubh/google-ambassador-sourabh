@@ -6,6 +6,7 @@ import { FloatingNavbar } from '../ui/FloatingNavbar';
 import { ChatBot } from '../ui/ChatBot';
 import { GeminiOrb } from '../GeminiOrb';
 import { Particles } from '../ui/Particles';
+import { HeaderLogo } from '../ui/HeaderLogo';
 
 export const ContactPage: React.FC = () => {
     return (
@@ -27,6 +28,7 @@ export const ContactPage: React.FC = () => {
             </div>
 
             <FloatingNavbar />
+            <HeaderLogo />
             
             <div className="pt-32 container mx-auto px-6 max-w-6xl relative z-10">
                 

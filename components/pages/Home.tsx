@@ -41,7 +41,7 @@ export const Home: React.FC = () => {
       <div className="relative z-10">
         {/* Background - Original Ambience */}
         <div className="fixed inset-0 z-0 w-full h-full pointer-events-none">
-            <Canvas camera={{ position: [0, 0, 5], fov: 45 }}>
+            <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1.5]}>
                 <ambientLight intensity={0.5} />
                 <pointLight position={[10, 10, 10]} intensity={1.5} color="#fff" />
                 <pointLight position={[-10, -10, -10]} intensity={1} color="#DB4437" />

@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 
 export const Particles: React.FC = () => {
+  const [particleCount, setParticleCount] = useState(20);
+
+  useEffect(() => {
+    const isMobile = window.innerWidth < 768;
+    setParticleCount(isMobile ? 8 : 30); // Reduced for mobile
+  }, []);
+
   // Generate random particles
-  const particles = Array.from({ length: 20 }).map((_, i) => ({
+  const particles = Array.from({ length: particleCount }).map((_, i) => ({
     id: i,
     x: Math.random() * 100,
     y: Math.random() * 100,

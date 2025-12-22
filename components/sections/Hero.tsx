@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion, useScroll, useTransform } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import { Github, Linkedin, Twitter, Mail, FileText } from 'lucide-react';
 
 export const Hero: React.FC = () => {
@@ -113,12 +114,12 @@ export const Hero: React.FC = () => {
                             <link.icon className="w-5 h-5 group-hover:drop-shadow-[0_0_8px_rgba(255,255,255,0.5)]" />
                         </a>
                     ))}
-                    <a 
-                        href="#contact" 
+                    <Link 
+                        to="/contact" 
                         className="px-6 py-3 ml-2 bg-google-blue hover:bg-google-blue/90 text-white font-medium rounded-full transition-all duration-300 hover:shadow-[0_0_20px_rgba(66,133,244,0.4)] hover:-translate-y-1"
                     >
                         Let's Connect
-                    </a>
+                    </Link>
                 </motion.div>
             </motion.div>
 

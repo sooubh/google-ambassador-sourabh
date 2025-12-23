@@ -6,7 +6,7 @@ export const Particles: React.FC = () => {
 
   useEffect(() => {
     const isMobile = window.innerWidth < 768;
-    setParticleCount(isMobile ? 8 : 30); // Reduced for mobile
+    setParticleCount(isMobile ? 5 : 25); // Significantly reduced for performance
   }, []);
 
   // Generate random particles

@@ -21,6 +21,9 @@ import { Contact } from '../sections/Contact';
 import { Preloader } from '../ui/Preloader';
 import { AnimatePresence } from 'framer-motion';
 
+export const Home: React.FC = () => {
+    const location = useLocation();
+    const [isLoading, setIsLoading] = React.useState(true);
     const [isMobile, setIsMobile] = React.useState(false);
 
     useEffect(() => {

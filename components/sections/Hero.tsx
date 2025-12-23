@@ -27,14 +27,14 @@ export const Hero: React.FC = () => {
                className="flex-1 text-center lg:text-left space-y-6 md:space-y-8"
             >
                 {/* Role Label */}
-                <motion.div
+                 <motion.div
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="inline-block"
                 >
                      <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 bg-white/5 text-xs md:text-sm font-medium tracking-widest uppercase text-google-blue backdrop-blur-sm shadow-[0_0_15px_rgba(66,133,244,0.3)]">
-                        Full-Stack Engineer • Google Ambassador
+                        Vibe Coder • Google Ambassador
                      </span>
                 </motion.div>
 
@@ -91,7 +91,7 @@ export const Hero: React.FC = () => {
                         Building digital experiences that <span className="text-google-blue font-medium">inspire</span> and <span className="text-google-red font-medium">innovate</span>.
                     </p>
                     <p className="text-sm md:text-base text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                        I specialize in building scalable web applications, integrating AI solutions, and crafting intuitive user interfaces. Passionate about bridging the gap between students and the future of technology.
+                        I am a <span className="text-white font-medium">Vibe Coder</span> constantly learning new technologies. I specialize in building scalable web applications, integrating AI solutions, and crafting intuitive user interfaces.
                     </p>
                 </motion.div>
 

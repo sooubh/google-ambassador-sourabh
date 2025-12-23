@@ -4,7 +4,7 @@ import { GraduationCap, Award, Rocket, Code, Brain } from 'lucide-react';
 
 const timelineData = [
   {
-    year: '2022 - 2026',
+    year: '2024 - 2028',
     title: 'B.Tech in Computer Engineering',
     institution: "Sandip Foundation's SITRC",
     description: 'Pursuing a comprehensive degree with a focus on Artificial Intelligence, Machine Learning, and Full-Stack Development. Building a strong foundation in algorithms and system design.',
@@ -16,7 +16,7 @@ const timelineData = [
     year: '2023',
     title: 'Full-Stack Evolution',
     institution: 'Self-Driven Learning',
-    description: 'Mastered the MERN stack and modern web technologies (React, TypeScript, Next.js). Started building complex projects and exploring the open-source ecosystem.',
+    description: 'Learning the MERN stack, Google Cloud Platform (GCP), and modern web technologies (React, TypeScript, Next.js). Started building complex projects and exploring the open-source ecosystem.',
     icon: Code,
     color: 'text-purple-400',
     bgColor: 'bg-purple-400/10'

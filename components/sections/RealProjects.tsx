@@ -38,7 +38,11 @@ const projects = [
     }
 ];
 
+import { ComingSoonModal } from '../ui/ComingSoonModal';
+
 export const RealProjects: React.FC = () => {
+  const [isComingSoonOpen, setIsComingSoonOpen] = React.useState(false);
+
   return (
     <section className="min-h-screen py-16 md:py-32 relative z-10 bg-transparent overflow-hidden">
       
@@ -149,7 +153,11 @@ export const RealProjects: React.FC = () => {
                             </div>
 
                             <div className={`flex items-center gap-4 ${index % 2 === 1 ? 'justify-end' : ''}`}>
-                                <a href={project.link} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-white hover:text-google-blue transition-colors group/link">
+                                <a 
+                                    href={project.link} 
+                                    onClick={(e) => { e.preventDefault(); setIsComingSoonOpen(true); }}
+                                    className="flex items-center gap-2 text-white hover:text-google-blue transition-colors group/link cursor-pointer"
+                                >
                                     <span className="border-b border-transparent group-hover/link:border-google-blue">View Live</span>
                                     <ArrowUpRight className="w-4 h-4 transform group-hover/link:translate-x-1 group-hover/link:-translate-y-1 transition-transform" />
                                 </a>
@@ -169,6 +177,11 @@ export const RealProjects: React.FC = () => {
                 </div>
             </a>
         </div>
+
+        <ComingSoonModal 
+            isOpen={isComingSoonOpen} 
+            onClose={() => setIsComingSoonOpen(false)} 
+        />
 
       </div>
     </section>

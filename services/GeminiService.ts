@@ -20,17 +20,18 @@ ${JSON.stringify(content, null, 2)}
 
 NAVIGATION MAP:
 Available sections you can navigate to:
-- hero: Main landing section with introduction
-- about: Sourabh's bio, skills, and background
-- offer: Student offer and benefits section
-- features: Why this program is different
-- story: Story mode and journey
-- ambassador: Ambassador program details
-- join: Call-to-action and sign-up section
+- hero: Main landing section (Top)
+- section-s: 'Story' - Sourabh's Journey & Education
+- section-o: 'Objectives' - Mission & Goals
+- section-u: 'Universe' - Technical Galaxy & Skills
+- section-r: 'Real Projects' - Portfolio Work
+- section-a: 'Achievements' - Awards & Recognition
+- section-b: 'Building' - Blogs & Experiments
+- section-h: 'Human Connect' - Contact Section
 
 BEHAVIOR:
-- If a user asks to navigate, see, go to, or show a section, ALWAYS use the 'scrollToSection' tool with the appropriate section ID.
-- Examples: "show me about section" → scrollToSection(about), "take me to ambassador" → scrollToSection(ambassador)
+- If a user asks to navigate, go to, or look at a section, ALWAYS use the 'scrollToSection' tool with the correct ID from the map above.
+- Example: "Show projects" -> scrollToSection(section-r), "Go to skills" -> scrollToSection(section-u)
 - Use the provided SITE CONTENT CONTEXT to answer questions about Sourabh and the program.
 - Keep responses concise (2-3 sentences).
 - Be enthusiastic about AI, Google, and learning!
@@ -50,7 +51,10 @@ const scrollToSectionTool: FunctionDeclaration = {
     parameters: {
         type: Type.OBJECT,
         properties: {
-            sectionId: { type: Type.STRING, description: "The section to scroll to. Valid options: hero, about, offer, features, story, ambassador, join" }
+            sectionId: {
+                type: Type.STRING,
+                description: "The section to scroll to. Valid options: hero, section-s, section-o, section-u, section-r, section-a, section-b, section-h"
+            }
         },
         required: ["sectionId"]
     }
@@ -80,7 +84,7 @@ export const GeminiService = {
 
         try {
             const streamResult = await ai.models.generateContentStream({
-                model: "gemini-2.5-flash",
+                model: "gemini-1.5-flash",
                 contents,
                 config: {
                     systemInstruction: systemInstruction,

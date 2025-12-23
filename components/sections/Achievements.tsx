@@ -17,21 +17,21 @@ export const Achievements: React.FC = () => {
     },
     // Standard Items
     {
-       id: "sih-2023",
+       id: "gen-ai-finalist",
        size: "standard",
-       year: "2023",
-       title: "SIH Finalist",
+       year: "2024",
+       title: "GenAI Exchange Finalist",
        icon: <Trophy className="w-6 h-6 text-google-yellow" />,
-       desc: "Led team to Smart India Hackathon finals.",
+       desc: "Finalist in Google Cloud's GenAI Exchange Hackathon.",
        color: "bg-google-yellow/10 border-google-yellow/20"
     },
     {
        id: "btech",
        size: "standard",
-       year: "2022-26",
+       year: "2024-28",
        title: "B.Tech Computer Engg.",
        icon: <GraduationCap className="w-6 h-6 text-google-green" />,
-       desc: "Top 5% of class. AI/ML Specialization.",
+       desc: "AI/ML Specialization. Consistent academic performer.",
        color: "bg-google-green/10 border-google-green/20"
     },
     // Filler / "Big" Items
@@ -41,16 +41,16 @@ export const Achievements: React.FC = () => {
        year: "2023",
        title: "Open Source Contributor",
        icon: <Star className="w-6 h-6 text-purple-400" />,
-       desc: "Active contributor to major React & AI repositories. merged 50+ PRs in 2023.",
+       desc: "Active contributor to major React & AI repositories. Merged PRs in Hacktoberfest.",
        color: "bg-purple-500/10 border-purple-500/20"
     },
     {
-       id: "hack-winner",
+       id: "devfest",
        size: "standard",
-       year: "2022",
-       title: "HackNITR Winner",
+       year: "2023",
+       title: "DevFest Mumbai",
        icon: <Crown className="w-6 h-6 text-pink-500" />,
-       desc: "1st Place in EdTech Track.",
+       desc: "Networked with industry experts and attended sessions on cloud & AI.",
        color: "bg-pink-500/10 border-pink-500/20"
     },
     {
@@ -59,25 +59,25 @@ export const Achievements: React.FC = () => {
        year: "2023",
        title: "Community Lead",
        icon: <Medal className="w-6 h-6 text-orange-400" />,
-       desc: "Grew local tech community to 500+ members.",
+       desc: "Grew local tech community and organized meetups.",
        color: "bg-orange-500/10 border-orange-500/20"
     },
     {
        id: "writer",
        size: "tall", // row-span-2
        year: "2024",
-       title: "Top Tech Writer",
+       title: "Tech Writer",
        icon: <Bookmark className="w-6 h-6 text-cyan-400" />,
-       desc: "Published 20+ articles on Hashnode & Medium regarding GenAI, React Performance, and System Design. accumulated 50k+ views.",
+       desc: "Writing about GenAI, React Performance, and System Design.",
        color: "bg-cyan-500/10 border-cyan-500/20"
     },
     {
-       id: "mentor",
+       id: "learner",
        size: "standard",
        year: "2024",
-       title: "Mentor @ GSSoC",
+       title: "Continuous Learner",
        icon: <ThumbsUp className="w-6 h-6 text-white" />,
-       desc: "Mentored 100+ students in Open Source.",
+       desc: "Exploring new technologies and building projects.",
        color: "bg-white/10 border-white/20"
     }
   ];

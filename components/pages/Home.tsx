@@ -18,8 +18,17 @@ import { Achievements } from '../sections/Achievements';
 import { Building } from '../sections/Building';
 import { Contact } from '../sections/Contact';
 
-export const Home: React.FC = () => {
-    const location = useLocation();
+import { Preloader } from '../ui/Preloader';
+import { AnimatePresence } from 'framer-motion';
+
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
 
     useEffect(() => {
         if (location.state && (location.state as any).scrollTo) {
@@ -39,18 +48,33 @@ export const Home: React.FC = () => {
   return (
     <main className="bg-black text-white selection:bg-google-blue selection:text-white relative w-full overflow-x-hidden min-h-screen">
       
-      {/* 2D CONTENT LAYER */}
+      <AnimatePresence mode="wait">
+        {isLoading && (
+            <Preloader onComplete={() => setIsLoading(false)} />
+        )}
+      </AnimatePresence>
+
+      {!isLoading && (
+         <>
+          {/* 2D CONTENT LAYER */}
       <div className="relative z-10">
         {/* Background - Original Ambience */}
         <div className="fixed inset-0 z-0 w-full h-full pointer-events-none">
-            <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1.5]}>
-                <ambientLight intensity={0.5} />
-                <pointLight position={[10, 10, 10]} intensity={1.5} color="#fff" />
-                <pointLight position={[-10, -10, -10]} intensity={1} color="#DB4437" />
-                <Suspense fallback={null}>
-                    <GeminiOrb />
-                </Suspense>
-            </Canvas>
+            {!isMobile ? (
+                <Canvas camera={{ position: [0, 0, 5], fov: 45 }} dpr={[1, 1.5]}>
+                    <ambientLight intensity={0.5} />
+                    <pointLight position={[10, 10, 10]} intensity={1.5} color="#fff" />
+                    <pointLight position={[-10, -10, -10]} intensity={1} color="#DB4437" />
+                    <Suspense fallback={null}>
+                        <GeminiOrb />
+                    </Suspense>
+                </Canvas>
+            ) : (
+                <div className="w-full h-full bg-gradient-to-br from-gray-900 via-black to-blue-900/20 relative overflow-hidden">
+                    <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-google-blue/20 rounded-full blur-[100px] animate-pulse" />
+                    <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-600/20 rounded-full blur-[100px] animate-pulse delay-1000" />
+                </div>
+            )}
         </div>
         
         <div className="fixed inset-0 z-0 pointer-events-none opacity-50">
@@ -73,6 +97,8 @@ export const Home: React.FC = () => {
       <HeaderLogo />
       <MobileMenu />
       <ChatBot />
+         </>
+      )}
     </main>
   );
 };

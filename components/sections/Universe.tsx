@@ -41,6 +41,7 @@ const orbits = [
         speed: 45,
         items: [
             { name: "Gemini AI", description: "Generative AI Integration.", icon: Brain, color: "text-purple-400" },
+            { name: "GCP", description: "Google Cloud Platform.", icon: Cloud, color: "text-blue-400" },
             { name: "Firebase", description: "Backend-as-a-Service.", icon: Database, color: "text-orange-500" },
             { name: "Docker", description: "Containerization.", icon: Cloud, color: "text-blue-500" },
             { name: "Git", description: "Version Control.", icon: Globe, color: "text-red-400" },

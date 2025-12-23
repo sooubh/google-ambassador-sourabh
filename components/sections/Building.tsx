@@ -54,7 +54,11 @@ const TerminalLine = ({ text, delay = 0 }: { text: string; delay?: number }) => 
     );
 };
 
+import { ComingSoonModal } from '../ui/ComingSoonModal';
+
 export const Building: React.FC = () => {
+  const [isComingSoonOpen, setIsComingSoonOpen] = useState(false);
+
   return (
     <section className="min-h-screen py-24 relative z-10 bg-transparent flex flex-col justify-center">
       
@@ -89,14 +93,14 @@ export const Building: React.FC = () => {
                 </h4>
                 
                 {articles.map((article, index) => (
-                    <motion.a 
-                        href={article.link}
+                    <motion.div 
                         key={index}
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         transition={{ delay: index * 0.1 }}
                         whileHover={{ x: 10 }}
-                        className="block group border-b border-white/5 pb-8 last:border-0"
+                        onClick={() => setIsComingSoonOpen(true)}
+                        className="block group border-b border-white/5 pb-8 last:border-0 cursor-pointer"
                     >
                         <div className="flex items-center gap-3 text-xs font-mono text-gray-500 mb-2">
                             <span>{article.date}</span>
@@ -124,7 +128,7 @@ export const Building: React.FC = () => {
                                 Read Article <ArrowRight className="w-4 h-4" />
                             </span>
                         </div>
-                    </motion.a>
+                    </motion.div>
                 ))}
             </div>
 
@@ -199,6 +203,12 @@ export const Building: React.FC = () => {
         </div>
 
       </div>
+
+      
+      <ComingSoonModal 
+        isOpen={isComingSoonOpen} 
+        onClose={() => setIsComingSoonOpen(false)} 
+      />
     </section>
   );
 };

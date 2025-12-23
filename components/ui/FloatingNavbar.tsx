@@ -65,11 +65,11 @@ export const FloatingNavbar: React.FC = () => {
       initial={{ y: -100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.8, ease: "easeOut" }}
-      className="fixed top-8 left-1/2 -translate-x-1/2 z-50 w-auto"
+      className="hidden md:block fixed top-6 md:top-8 left-1/2 -translate-x-1/2 z-50 w-auto"
     >
       <div 
         className={`
-          flex items-center justify-center gap-2 sm:gap-6 px-6 py-3 rounded-full 
+          flex items-center justify-center gap-1 sm:gap-6 px-3 py-2 md:px-6 md:py-3 rounded-full 
           transition-all duration-500 border border-white/5
           ${scrolled ? 'bg-black/60 backdrop-blur-2xl shadow-2xl shadow-black/50 scale-90' : 'bg-black/20 backdrop-blur-xl shadow-lg'}
         `}
@@ -78,11 +78,11 @@ export const FloatingNavbar: React.FC = () => {
           <button
             key={item.id}
             onClick={() => scrollToSection(item.id)}
-            className="group relative flex flex-col items-center justify-center w-10 h-10 sm:w-12 sm:h-12"
+            className="group relative flex flex-col items-center justify-center w-9 h-9 sm:w-12 sm:h-12"
           >
             <span 
               className={`
-                relative z-10 font-bold text-sm sm:text-base transition-colors duration-300
+                relative z-10 font-bold text-xs sm:text-base transition-colors duration-300
                 ${activeSection === item.id ? 'text-white' : 'text-white/50 group-hover:text-white/80'}
               `}
             >
@@ -99,7 +99,7 @@ export const FloatingNavbar: React.FC = () => {
             )}
 
             {/* Hover Tooltip (Name Reveal) */}
-            <span className="absolute -bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[10px] uppercase tracking-wider text-white/70 whitespace-nowrap bg-black/80 px-2 py-1 rounded backdrop-blur-sm border border-white/5 pointer-events-none">
+            <span className="hidden md:block absolute -bottom-8 opacity-0 group-hover:opacity-100 transition-opacity duration-300 text-[10px] uppercase tracking-wider text-white/70 whitespace-nowrap bg-black/80 px-2 py-1 rounded backdrop-blur-sm border border-white/5 pointer-events-none">
                 {item.name}
             </span>
           </button>

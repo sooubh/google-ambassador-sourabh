@@ -114,7 +114,7 @@ export const Story: React.FC = () => {
                             </div>
 
                             {/* Content Card */}
-                            <div className="flex-1 pl-20 md:pl-0 w-full">
+                            <div className="flex-1 pl-16 md:pl-0 w-full">
                                 <motion.div 
                                     whileHover={{ y: -5, boxShadow: "0 10px 30px -10px rgba(0,0,0,0.5)" }}
                                     className={`

@@ -16,15 +16,15 @@ export const Hero: React.FC = () => {
   ];
 
   return (
-    <section className="min-h-screen relative flex items-center justify-center overflow-hidden pt-20">
+    <section className="min-h-screen relative flex items-center justify-center overflow-hidden pt-12 md:pt-20">
       
-      <div className="container mx-auto px-6 z-10">
-        <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-12 lg:gap-20 max-w-6xl mx-auto">
+      <div className="container mx-auto px-4 md:px-6 z-10">
+        <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-8 md:gap-12 lg:gap-20 max-w-6xl mx-auto">
             
             {/* Left Content (Text) */}
             <motion.div 
                style={{ y, opacity }}
-               className="flex-1 text-center lg:text-left space-y-8"
+               className="flex-1 text-center lg:text-left space-y-6 md:space-y-8"
             >
                 {/* Role Label */}
                 <motion.div
@@ -33,14 +33,14 @@ export const Hero: React.FC = () => {
                     transition={{ duration: 0.8, delay: 0.2 }}
                     className="inline-block"
                 >
-                     <span className="px-4 py-2 rounded-full border border-white/10 bg-white/5 text-sm font-medium tracking-widest uppercase text-google-blue backdrop-blur-sm shadow-[0_0_15px_rgba(66,133,244,0.3)]">
+                     <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 bg-white/5 text-xs md:text-sm font-medium tracking-widest uppercase text-google-blue backdrop-blur-sm shadow-[0_0_15px_rgba(66,133,244,0.3)]">
                         Full-Stack Engineer • Google Ambassador
                      </span>
                 </motion.div>
 
                 {/* Name Animation */}
                 <div>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[0.9]">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight text-white leading-[0.9]">
                         {['S', 'O', 'U', 'R', 'A', 'B', 'H'].map((char, index) => (
                             <motion.span
                                 key={index}
@@ -59,7 +59,7 @@ export const Hero: React.FC = () => {
                             </motion.span>
                         ))}
                     </h1>
-                    <h1 className="text-5xl md:text-7xl lg:text-8xl font-light tracking-tight text-gray-400 leading-[0.9] mt-2 group">
+                    <h1 className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-light tracking-tight text-gray-400 leading-[0.9] mt-2 group">
                         {['S', 'I', 'N', 'G', 'H'].map((char, index) => (
                             <motion.span
                                 key={index}
@@ -87,10 +87,10 @@ export const Hero: React.FC = () => {
                     transition={{ duration: 1, delay: 1.0 }}
                     className="space-y-4"
                 >
-                    <p className="text-xl md:text-2xl text-gray-300 font-light max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    <p className="text-lg sm:text-xl md:text-2xl text-gray-300 font-light max-w-lg mx-auto lg:mx-0 leading-relaxed">
                         Building digital experiences that <span className="text-google-blue font-medium">inspire</span> and <span className="text-google-red font-medium">innovate</span>.
                     </p>
-                    <p className="text-base text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed">
+                    <p className="text-sm md:text-base text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed">
                         I specialize in building scalable web applications, integrating AI solutions, and crafting intuitive user interfaces. Passionate about bridging the gap between students and the future of technology.
                     </p>
                 </motion.div>

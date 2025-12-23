@@ -236,7 +236,7 @@ export const Universe: React.FC = () => {
                             animate={{ opacity: 1, y: 0 }}
                             exit={{ opacity: 0, y: -20 }}
                             transition={{ duration: 0.5 }}
-                            className="w-full max-w-4xl mx-auto"
+                            className="hidden md:block w-full max-w-4xl mx-auto"
                         >
                             {/* Toggle Back Button (Desktop only) */}
                             <div className="hidden md:flex justify-center mb-12">
@@ -281,26 +281,49 @@ export const Universe: React.FC = () => {
                 </AnimatePresence>
 
                  {/* Mobile-only fallback to ensure list always shows on mobile regardless of state */}
-                 <div className="md:hidden w-full">
+                 <div className="md:hidden w-full space-y-8">
                     {orbits.slice(1).map((orbit, i) => (
-                        <div key={i} className="mb-8">
-                             <h4 className="text-lg font-bold text-gray-400 border-b border-white/10 pb-2 uppercase tracking-widest text-xs mb-4">
-                                {orbit.name}
-                            </h4>
+                        <motion.div 
+                            key={i} 
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-50px" }}
+                            transition={{ delay: i * 0.1 }}
+                        >
+                             <div className="flex items-center gap-3 mb-4 border-b border-white/10 pb-2">
+                                <div className="h-px flex-1 bg-gradient-to-r from-transparent to-white/20"></div>
+                                <h4 className="text-sm font-bold text-google-blue uppercase tracking-[0.2em] shadow-google-blue/50 drop-shadow-sm">
+                                    {orbit.name}
+                                </h4>
+                                <div className="h-px flex-1 bg-gradient-to-r from-white/20 to-transparent"></div>
+                            </div>
+
                             <div className="grid grid-cols-1 gap-3">
                                 {orbit.items.map((item, j) => (
-                                    <div key={j} className="flex items-start gap-4 p-4 rounded-xl bg-white/5 border border-white/5 active:scale-95 transition-transform">
-                                        <div className="p-2 rounded-lg bg-black/50 mt-1">
-                                            <item.icon className={`w-5 h-5 ${item.color}`} />
-                                        </div>
-                                        <div>
-                                            <h5 className="font-bold text-gray-200">{item.name}</h5>
-                                            <p className="text-xs text-gray-500 mt-1">{item.description}</p>
+                                    <div 
+                                        key={j} 
+                                        className="relative group overflow-hidden rounded-xl bg-white/5 border border-white/10 active:scale-[0.98] transition-all duration-200"
+                                    >
+                                        <div className="absolute inset-0 bg-gradient-to-r from-white/5 to-transparent opacity-0 group-active:opacity-100 transition-opacity" />
+                                        
+                                        <div className="flex items-start gap-4 p-4 relative z-10">
+                                            <div className={`p-2.5 rounded-xl bg-black/40 border border-white/5 shadow-inner ${item.color.replace('text-', 'shadow-')}/20`}>
+                                                <item.icon className={`w-6 h-6 ${item.color}`} />
+                                            </div>
+                                            <div className="flex-1 min-w-0">
+                                                <div className="flex items-center justify-between mb-1">
+                                                    <h5 className="font-bold text-gray-100 text-base">{item.name}</h5>
+                                                    <div className={`w-1.5 h-1.5 rounded-full ${item.color.replace('text-', 'bg-')}`} />
+                                                </div>
+                                                <p className="text-xs text-gray-400 leading-relaxed font-light border-l-2 border-white/5 pl-2">
+                                                    {item.description}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </motion.div>
                     ))}
                  </div>
             </div>

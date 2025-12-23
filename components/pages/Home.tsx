@@ -6,6 +6,7 @@ import { GeminiOrb } from '../GeminiOrb';
 import { Particles } from '../ui/Particles';
 import { FloatingNavbar } from '../ui/FloatingNavbar';
 import { HeaderLogo } from '../ui/HeaderLogo';
+import { MobileMenu } from '../ui/MobileMenu';
 
 // Sections
 import { Hero } from '../sections/Hero';
@@ -70,6 +71,7 @@ export const Home: React.FC = () => {
 
       <FloatingNavbar />
       <HeaderLogo />
+      <MobileMenu />
       <ChatBot />
     </main>
   );

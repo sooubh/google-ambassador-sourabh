@@ -11,7 +11,7 @@ export const HeaderLogo: React.FC = () => {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.8 }}
-        className="fixed top-8 left-8 z-50 cursor-pointer hidden md:flex items-center gap-2 group"
+        className="fixed top-6 left-6 md:top-8 md:left-8 z-50 cursor-pointer flex items-center gap-2 group"
         onClick={() => {
             navigate('/');
             window.scrollTo({ top: 0, behavior: 'smooth' });

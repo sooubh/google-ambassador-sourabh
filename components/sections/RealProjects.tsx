@@ -40,7 +40,7 @@ const projects = [
 
 export const RealProjects: React.FC = () => {
   return (
-    <section className="min-h-screen py-32 relative z-10 bg-transparent overflow-hidden">
+    <section className="min-h-screen py-16 md:py-32 relative z-10 bg-transparent overflow-hidden">
       
       {/* Background Decor */}
       <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-purple-600/10 rounded-full blur-[120px] pointer-events-none" />
@@ -53,14 +53,14 @@ export const RealProjects: React.FC = () => {
             initial={{ opacity: 0, y: 30 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
-            className="mb-24 md:flex md:items-end md:justify-between border-b border-white/10 pb-12"
+            className="mb-12 md:mb-24 md:flex md:items-end md:justify-between border-b border-white/10 pb-8 md:pb-12"
         >
             <div className="max-w-2xl">
-                <h2 className="text-sm font-bold text-google-blue uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
+                <h2 className="text-xs md:text-sm font-bold text-google-blue uppercase tracking-[0.2em] mb-4 flex items-center gap-2">
                     <span className="w-8 h-px bg-google-blue"></span>
                     04 — Real Projects
                 </h2>
-                <h3 className="text-4xl md:text-6xl font-bold text-white leading-tight">
+                <h3 className="text-3xl md:text-4xl lg:text-6xl font-bold text-white leading-tight">
                     Architecting <br/>
                     <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Digital Solutions</span>
                 </h3>
@@ -73,7 +73,7 @@ export const RealProjects: React.FC = () => {
         </motion.div>
 
         {/* Projects Stack */}
-        <div className="flex flex-col gap-32">
+        <div className="flex flex-col gap-16 md:gap-32">
             {projects.map((project, index) => (
                 <motion.div 
                     key={index}

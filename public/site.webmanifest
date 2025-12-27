@@ -1,0 +1,15 @@
+{
+    "name": "Sourabh Singh - Google Gemini Ambassador",
+    "short_name": "Sourabh Singh",
+    "icons": [
+        {
+            "src": "/favicon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ],
+    "theme_color": "#4285F4",
+    "background_color": "#000000",
+    "display": "standalone",
+    "description": "Portfolio and Google Gemini Ambassador website of Sourabh Singh"
+}

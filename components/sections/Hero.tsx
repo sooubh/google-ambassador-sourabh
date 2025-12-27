@@ -9,7 +9,7 @@ export const Hero: React.FC = () => {
   const opacity = useTransform(scrollY, [0, 300], [1, 0]);
 
   const socialLinks = [
-    { icon: Github, href: "https://github.com/StartCodeWithS", label: "GitHub" },
+    { icon: Github, href: "https://github.com/sooubh", label: "GitHub" },
     { icon: Linkedin, href: "https://linkedin.com/in/sourabh-singh", label: "LinkedIn" },
     { icon: Twitter, href: "https://twitter.com/sourabh_singgh", label: "Twitter" },
     { icon: Mail, href: "mailto:sourabh3527@gmail.com", label: "Email" },
@@ -34,7 +34,7 @@ export const Hero: React.FC = () => {
                     className="inline-block"
                 >
                      <span className="px-3 py-1.5 md:px-4 md:py-2 rounded-full border border-white/10 bg-white/5 text-xs md:text-sm font-medium tracking-widest uppercase text-google-blue backdrop-blur-sm shadow-[0_0_15px_rgba(66,133,244,0.3)]">
-                        Vibe Coder • Google Ambassador
+                        Full Stack Developer • Google Ambassador
                      </span>
                 </motion.div>
 
@@ -91,7 +91,7 @@ export const Hero: React.FC = () => {
                         Building digital experiences that <span className="text-google-blue font-medium">inspire</span> and <span className="text-google-red font-medium">innovate</span>.
                     </p>
                     <p className="text-sm md:text-base text-gray-500 max-w-lg mx-auto lg:mx-0 leading-relaxed">
-                        I am a <span className="text-white font-medium">Vibe Coder</span> constantly learning new technologies. I specialize in building scalable web applications, integrating AI solutions, and crafting intuitive user interfaces.
+                        Specializing in scalable web applications, AI integration, and intuitive user interfaces.
                     </p>
                 </motion.div>
 
@@ -136,7 +136,7 @@ export const Hero: React.FC = () => {
                 <div className="relative w-64 h-64 md:w-80 md:h-80 lg:w-[450px] lg:h-[450px] rounded-[2rem] lg:rounded-[3rem] overflow-hidden border border-white/10 shadow-2xl shadow-google-blue/10 rotate-3 transition-all duration-500 hover:rotate-0 hover:scale-[1.02]">
                     <img 
                         src="/assets/profile-ambassador.png" 
-                        alt="Sourabh Singh" 
+                        alt="Sourabh Singh - Google Gemini Ambassador and Full Stack Developer specializing in AI integration and modern web development" 
                         className="w-full h-full object-cover scale-110 hover:scale-100 transition-all duration-700 ease-in-out"
                     />
                     

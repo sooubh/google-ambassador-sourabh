@@ -29,9 +29,19 @@ Available sections you can navigate to:
 - section-b: 'Building' - Blogs & Experiments
 - section-h: 'Human Connect' - Contact Section
 
+CONTACT INFORMATION:
+Sourabh's contact details for better connectivity:
+- Email: sourabh3527@gmail.com
+- GitHub: https://github.com/sooubh
+- LinkedIn: https://linkedin.com/in/sooubh
+- Instagram: https://instagram.com/sourabh_singg
+- Twitter: https://twitter.com/sourabh_singgh
+
 BEHAVIOR:
 - If a user asks to navigate, go to, or look at a section, ALWAYS use the 'scrollToSection' tool with the correct ID from the map above.
 - Example: "Show projects" -> scrollToSection(section-r), "Go to skills" -> scrollToSection(section-u)
+- When users ask about contacting, connecting with, or reaching out to Sourabh, provide the contact information above.
+- You can also navigate them to the contact section (section-h) using the scrollToSection tool.
 - Use the provided SITE CONTENT CONTEXT to answer questions about Sourabh and the program.
 - Keep responses concise (2-3 sentences).
 - Be enthusiastic about AI, Google, and learning!
@@ -84,14 +94,14 @@ export const GeminiService = {
 
         try {
             const streamResult = await ai.models.generateContentStream({
-                model: "gemini-1.5-flash",
+                model: "models/gemini-2.0-flash-exp",
                 contents,
                 config: {
                     systemInstruction: systemInstruction,
                     tools: TOOLS,
                     responseModalities: ["TEXT"],
                     candidateCount: 1,
-                    temperature: 0.7, // Add temperature for consistent but creative output
+                    temperature: 0.7,
                 }
             });
 

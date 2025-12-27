@@ -58,8 +58,9 @@ export const Ambassador: React.FC = () => {
               <div className="bg-white p-4 rounded-xl h-24 w-64 flex items-center justify-center hover:scale-105 transition-all duration-300 shadow-lg shadow-white/5 hover:shadow-[0_0_30px_rgba(66,133,244,0.3)]">
                  <img 
                    src="/assets/sitrc-logo.png" 
-                   alt="Sandip Foundation's SITRC" 
+                   alt="Sandip Foundation's SITRC - Educational Institution and Partner supporting Sourabh Singh's Google Gemini Ambassador initiatives" 
                    className="h-full w-full object-contain hover:scale-105 transition-transform"
+                   loading="lazy"
                  />
               </div>
 
@@ -67,8 +68,9 @@ export const Ambassador: React.FC = () => {
               <div className="bg-white p-4 rounded-xl h-24 w-64 flex items-center justify-center gap-3 hover:scale-105 transition-all duration-300 shadow-lg shadow-white/5 hover:shadow-[0_0_30px_rgba(219,68,55,0.3)]">
                  <img 
                    src="https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg" 
-                   alt="Google" 
+                   alt="Google Student Ambassador Program - Official Partner Logo" 
                    className="h-8 object-contain"
+                   loading="lazy"
                  />
                  <div className="h-8 w-px bg-gray-300 mx-1"></div>
                  <div className="flex flex-col items-start leading-none">
@@ -99,7 +101,7 @@ export const Ambassador: React.FC = () => {
                         className="bg-white px-5 py-2 rounded-lg h-12 flex items-center justify-center hover:scale-105 transition-all duration-300 cursor-default hover:shadow-[0_0_20px_rgba(255,255,255,0.4)]"
                         title={logo.name}
                       >
-                         <img src={logo.url} alt={logo.name} className="h-5 w-auto object-contain" />
+                         <img src={logo.url} alt={`${logo.name} - Google technology used by Sourabh Singh`} className="h-5 w-auto object-contain" loading="lazy" />
                       </motion.div>
                    ))}
                </div>

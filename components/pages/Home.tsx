@@ -17,6 +17,7 @@ import { RealProjects } from '../sections/RealProjects';
 import { Achievements } from '../sections/Achievements';
 import { Building } from '../sections/Building';
 import { Contact } from '../sections/Contact';
+import { Footer } from '../ui/Footer';
 
 import { Preloader } from '../ui/Preloader';
 import { AnimatePresence } from 'framer-motion';
@@ -93,6 +94,8 @@ export const Home: React.FC = () => {
         <div id="section-a"><Achievements /></div>
         <div id="section-b"><Building /></div>
         <div id="section-h"><Contact /></div>
+        
+        <Footer />
 
       </div>
 

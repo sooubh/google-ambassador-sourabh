@@ -35,8 +35,9 @@ export const AboutMe: React.FC = () => {
                             <div className="relative rounded-[20px] overflow-hidden bg-black/40">
                                 <img 
                                   src={profileImage} 
-                                  alt="Sourabh Singh - Google Student Ambassador" 
+                                  alt="Sourabh Singh - B.Tech Computer Engineering Student, Google Gemini Ambassador, and Full Stack AI Developer" 
                                   className="w-full h-auto object-cover transform transition-transform duration-700 hover:scale-105"
+                                  loading="lazy"
                                 />
                                 
                                 {/* Professional Vignette Overlay */}

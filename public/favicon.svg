@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none">
+  <defs>
+    <linearGradient id="sparkleGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="50%" style="stop-color:#EC4899;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#F59E0B;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Main sparkle -->
+  <path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z" fill="url(#sparkleGradient)" stroke="url(#sparkleGradient)" stroke-width="0.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Top right small sparkle -->
+  <path d="M20 2v4" stroke="url(#sparkleGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M22 4h-4" stroke="url(#sparkleGradient)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  
+  <!-- Bottom left circle -->
+  <circle cx="4" cy="20" r="1.5" fill="url(#sparkleGradient)"/>
+  
+  <!-- Additional tiny sparkles around main sparkle -->
+  <circle cx="2" cy="8" r="0.8" fill="url(#sparkleGradient)"/>
+  <circle cx="22" cy="14" r="0.6" fill="url(#sparkleGradient)"/>
+  <circle cx="18" cy="20" r="0.7" fill="url(#sparkleGradient)"/>
+  <circle cx="6" cy="3" r="0.5" fill="url(#sparkleGradient)"/>
+</svg>

@@ -262,7 +262,7 @@ export const StoryMode: React.FC = () => {
                   whileInView={{ opacity: 1, scale: 1 }}
                   transition={{ delay: i * 0.2 }}
                >
-                  <img src={img} alt="AI Generated" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                  <img src={img} alt={`AI Generated Imagen 4 artwork example ${i + 1} - Google Gemini AI image generation feature`} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" loading="lazy" />
                   <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-6">
                      <p className="text-sm text-white">"A futuristic cityscape with flying cars in the style of synthwave..."</p>
                   </div>

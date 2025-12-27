@@ -88,8 +88,9 @@ const Card: React.FC<CardProps> = ({ feature, index = 0, className = "" }) => {
         <div className="absolute inset-0 z-0">
            <img 
              src={feature.image} 
-             alt={feature.title}
+             alt={`${feature.title} - Google Gemini AI feature showcased by Sourabh Singh`}
              className="w-full h-full object-cover opacity-50 group-hover:scale-110 transition-transform duration-700"
+             loading="lazy"
            />
            <div className={`absolute inset-0 bg-gradient-to-t ${feature.gradient} opacity-40 group-hover:opacity-60 transition-opacity duration-500 mix-blend-overlay`} />
            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent" />
